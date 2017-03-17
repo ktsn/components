@@ -1,0 +1,23 @@
+<Radio name="foo" value="bar" bind:checked="bar" required>
+  Radio 1
+</Radio>
+<Radio name="foo" value="baz" bind:checked="baz" required>
+  Radio 2
+</Radio>
+
+<script>
+import Radio from '../src/Radio.html'
+
+export default {
+  data () {
+    return {
+      bar: true,
+      baz: false
+    }
+  },
+
+  components: {
+    Radio
+  }
+}
+</script>

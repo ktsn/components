@@ -1,0 +1,60 @@
+<label class="kc-radio">
+  <input class="kc-radio-input"
+    type="radio"
+    name="{{ name }}"
+    value="{{ value }}"
+    bind:checked="checked"
+    required="{{ required }}"
+    on:change="fire('change', event)">
+  <span class="kc-radio-label">{{ yield }}</span>
+</label>
+
+<style>
+.kc-radio {
+  display: inline-block;
+  position: relative;
+}
+
+.kc-radio-input {
+  display: none;
+}
+
+.kc-radio-label {
+  padding-left: 20px;
+}
+
+.kc-radio-label::before,
+.kc-radio-label::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  border-radius: 50%;
+}
+
+.kc-radio-label::before {
+  margin-top: -8px;
+  height: 14px;
+  width: 14px;
+  border: 1px solid #ccc;
+  transition: border-color 200ms cubic-bezier(0.41, 0.78, 0.33, 0.98);
+}
+
+.kc-radio-label::after {
+  left: 4px;
+  margin-top: -4px;
+  height: 8px;
+  width: 8px;
+  background-color: #1f68f6;
+  transform: scale(0);
+  transition: transform 200ms cubic-bezier(0.41, 0.78, 0.33, 0.98);
+}
+
+.kc-radio-input:checked + .kc-radio-label::before {
+  border-color: #1f68f6
+}
+
+.kc-radio-input:checked + .kc-radio-label::after {
+  transform: scale(1);
+}
+</style>
