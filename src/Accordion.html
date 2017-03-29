@@ -1,0 +1,90 @@
+<div class="kc-accordion">
+  <button
+    class="kc-accordion-trigger"
+    type="button"
+    on:click="set({ open: !open })"
+    aria-pressed="{{ openStr }}">{{ label }}</button>
+  <div ref:content class="kc-accordion-content" aria-expanded="{{ openStr }}">
+    {{ yield }}
+  </div>
+</div>
+
+<script>
+import { raf, getStyle } from './browser.js'
+
+function nextFrame (fn) {
+  raf(() => {
+    raf(fn)
+  })
+}
+
+export default {
+  data () {
+    return {
+      open: false
+    }
+  },
+
+  computed: {
+    openStr: open => String(!!open)
+  },
+
+  oncreate () {
+    const el = this.refs.content
+    this.observe('open', isOpen => {
+      if (isOpen) {
+        el.style.height = ''
+        const height = getStyle(el).height
+        el.style.height = '0'
+
+        nextFrame(() => {
+          el.style.height = height
+          el.addEventListener('transitionend', function cb () {
+            el.style.height = ''
+            el.removeEventListener('transitionend', cb)
+          })
+        })
+      } else {
+        el.style.display = 'block'
+        el.style.height = getStyle(el).height
+
+        nextFrame(() => {
+          el.style.height = '0'
+          el.addEventListener('transitionend', function cb () {
+            el.style.height = ''
+            el.style.display = ''
+            el.removeEventListener('transitionend', cb)
+          })
+        })
+      }
+    }, { init: false })
+  }
+}
+</script>
+
+<style>
+.kc-accordion {
+  border: 1px solid #ccc;
+}
+
+.kc-accordion-trigger {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  background-color: transparent;
+  font-size: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.kc-accordion-content {
+  overflow: hidden;
+  transition: height 0.5s cubic-bezier(0.26, 0.91, 0.54, 0.95);
+}
+
+.kc-accordion-content[aria-expanded="false"] {
+  display: none;
+}
+</style>
