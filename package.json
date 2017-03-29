@@ -4,6 +4,7 @@
   "description": "Personal components built with Svelte",
   "scripts": {
     "build": "svelte compile -i src/ -o lib/",
+    "lint": "eslint --ext html src test",
     "test": "rollup -c rollup.config.test.js && open test/index.html"
   },
   "keywords": [
@@ -17,6 +18,9 @@
   "author": "katashin",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^3.18.0",
+    "eslint-config-ktsn": "^1.0.0",
+    "eslint-plugin-html": "^2.0.1",
     "rollup": "^0.41.6",
     "rollup-plugin-svelte": "^1.6.0",
     "svelte-cli": "^1.3.5"

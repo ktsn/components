@@ -1,0 +1,6 @@
+---
+  extend: eslint-config-ktsn
+  parserOptions:
+    sourceType: module
+  plugins:
+    - html
