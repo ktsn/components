@@ -1,6 +1,6 @@
 <button class="kc-modal-trigger" on:click="set({ open: true })">{{ trigger }}</button>
 
-<div ref:backdrop class="kc-modal-backdrop" on:click="set({ open: false })" aria-hidden="{{ String(!open) }}"></div>
+<div ref:backdrop class="kc-modal-backdrop" aria-hidden="{{ String(!open) }}"></div>
 
 <div class="kc-modal" aria-hidden="{{ String(!open) }}" ref:modal>
   <div class="kc-modal-content">
