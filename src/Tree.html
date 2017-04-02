@@ -1,0 +1,10 @@
+<ul class="kc-tree">
+  {{#each data as d}}
+    <li class="kc-tree-item">
+      <div class="kc-tree-label">{{ d.label }}</div>
+      {{#if d.children}}
+        <:Self data="{{ d.children }}"></:Self>
+      {{/if}}
+    </li>
+  {{/each}}
+</ul>

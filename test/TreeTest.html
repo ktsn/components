@@ -1,0 +1,40 @@
+<Tree data="{{ data }}"></Tree>
+
+<script>
+import Tree from '../src/Tree.html'
+
+export default {
+  components: {
+    Tree
+  },
+
+  data () {
+    return {
+      data: [
+        { label: 'item 1' },
+        { label: 'item 2' },
+        {
+          label: 'item 3',
+          children: [
+            { label: 'item 1' },
+            {
+              label: 'item 2',
+              children: [
+                { label: 'item 1' },
+                { label: 'item 2' }
+              ]
+            },
+            { label: 'item 3' }
+          ]
+        },
+        {
+          label: 'item 3',
+          children: [
+            { label: 'item 1' }
+          ]
+        }
+      ]
+    }
+  }
+}
+</script>
