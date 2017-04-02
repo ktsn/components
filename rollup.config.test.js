@@ -5,6 +5,8 @@ module.exports = {
   entry: './test/all.test.js',
   dest: './test/__build__.js',
   plugins: [
-    svelte()
+    svelte({
+      dev: true
+    })
   ]
 }
