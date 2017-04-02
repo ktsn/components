@@ -1,0 +1,111 @@
+<button class="kc-modal-trigger" on:click="set({ open: true })">{{ trigger }}</button>
+
+<div ref:backdrop class="kc-modal-backdrop" on:click="set({ open: false })" aria-hidden="{{ String(!open) }}"></div>
+
+<div class="kc-modal" aria-hidden="{{ String(!open) }}" ref:modal>
+  <div class="kc-modal-content">
+    <button class="kc-modal-close" on:click="set({ open: false })"></button>
+    {{ yield }}
+  </div>
+</div>
+
+<script>
+import { append } from './browser'
+
+export default {
+  data () {
+    return {
+      open: false
+    }
+  },
+
+  oncreate () {
+    append(document.body, this.refs.backdrop)
+    append(document.body, this.refs.modal)
+
+    this.observe('open', value => {
+      const html = document.documentElement
+
+      if (value) {
+        html.classList.add('kc-modal-open')
+      } else {
+        html.classList.remove('kc-modal-open')
+      }
+    })
+  }
+}
+</script>
+
+<style scoped="false">
+.kc-modal {
+  overflow-y: auto;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.kc-modal-content {
+  position: relative;
+  margin: 0 auto;
+  width: 800px;
+  background-color: #fff;
+}
+
+.kc-modal-backdrop {
+  opacity: 0.5;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #000;
+}
+
+.kc-modal-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 0;
+  margin: 0;
+  height: 30px;
+  width: 30px;
+  border-width: 0;
+  background-color: transparent;
+  cursor: pointer;
+  transition: opacity 200ms ease-out;
+}
+
+.kc-modal-close:hover {
+  opacity: 0.5;
+}
+
+.kc-modal-close::before,
+.kc-modal-close::after {
+  content: '';
+  display: block;
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  background-color: #000;
+  transform-origin: left center;
+}
+
+.kc-modal-close::before {
+  top: 4px;
+  left: 4px;
+  transform: rotateZ(45deg);
+}
+
+.kc-modal-close::after {
+  bottom: 4px;
+  left: 4px;
+  transform: rotateZ(-45deg);
+}
+
+.kc-modal[aria-hidden="true"],
+.kc-modal-backdrop[aria-hidden="true"] {
+  display: none;
+}
+</style>
